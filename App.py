@@ -46,7 +46,7 @@ class Colors:
     warning_bg = "#2b2110"
 
     tertiary = "#818CF8"
-    tertiary_soft = "#242a4d"
+    tertiary_soft = "242a4d"
 
     danger = "#ef4444"
     success = "#22c55e"
@@ -203,7 +203,7 @@ class WeatherService:
             "latitude": latitude,
             "longitude": longitude,
             "current_weather": True,
-            "timezone": "auto",  # devolve os dados já na hora local da cidade
+            "timezone": "auto",
             "hourly": "temperature_2m,relative_humidity_2m,dew_point_2m,"
                       "precipitation_probability,precipitation,rain,snowfall,"
                       "surface_pressure,windspeed_10m,winddirection_10m,visibility",
@@ -220,7 +220,6 @@ class WeatherService:
         if hora_atual_str in horas_lista:
             return horas_lista.index(hora_atual_str)
 
-        # fallback: arredondar a hora atual para a hora certa (HH:00)
         if hora_atual_str and len(hora_atual_str) >= 13:
             hora_arredondada = hora_atual_str[:13] + ":00"
             if hora_arredondada in horas_lista:
@@ -273,11 +272,10 @@ class WeatherService:
         hora_atual = self._indice_hora_atual(dados_api)
 
         horas = []
-        for offset in range(8):  # próximas 8 horas, tal como no mockup
+        for offset in range(8):
             idx = hora_atual + offset
             if idx >= len(temperaturas):
                 break
-            # extrai "HH:MM" diretamente da hora local devolvida pela API
             label = "Agora" if offset == 0 else horas_lista[idx][11:16]
             horas.append({
                 "time": label,
@@ -557,7 +555,6 @@ class TopBar(tk.Frame):
         right = tk.Frame(self, bg=Colors.bg_topbar)
         right.pack(side="right", padx=24)
 
-        # Conta — agora vive no cabeçalho em vez do sidebar
         profile_frame = tk.Frame(right, bg=Colors.bg_topbar, cursor="hand2")
         profile_frame.pack(side="left", padx=(14, 0))
         icon_lbl = tk.Label(profile_frame, text="👤", font=(FONT_FAMILY, 12),
@@ -918,7 +915,6 @@ class HistoricoPage(tk.Frame):
             self.tree.column(col, width=150, anchor="center")
         self.tree.pack(fill="both", expand=True, padx=16, pady=16)
 
-        # Linhas alternadas (zebra) — muda estas duas cores como quiseres
         self.tree.tag_configure("linha_par", background=Colors.bg_card)
         self.tree.tag_configure("linha_impar", background=Colors.bg_card_alt)
 
@@ -1342,12 +1338,11 @@ class WeatherApp:
         elif key == "conta":
             AccountPage(self.page_container, self.conta_storage, self.conta_atual,
                         on_saved=self._on_conta_atualizada).pack(fill="both", expand=True)
-            self.sidebar.set_active(None)  # Conta já não vive no sidebar
+            self.sidebar.set_active(None)
 
     def handle_navigate(self, key):
         self.mostrar_pagina(key)
-
-    # -- pesquisa da top bar: mostra sempre o dashboard com a cidade pesquisada
+        
     def handle_search(self, query):
         self.mostrar_pagina("dashboard")
         self.dashboard_page.atualizar_meteorologia(query)
@@ -1355,7 +1350,6 @@ class WeatherApp:
     def _on_dashboard_city_changed(self, cidade):
         self.current_city = cidade
 
-    # -- conta atualizada a partir da AccountPage -----------------------------
     def _on_conta_atualizada(self, nova_conta):
         self.conta_atual = nova_conta
         self.current_city = nova_conta["Morada"]
