@@ -1,4 +1,4 @@
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f2027,50:203a43,100:38BDF8&height=200&section=header&text=WEATHER%20APP&fontSize=52&fontColor=ffffff&animation=fadeIn&fontAlignY=35&desc=Check%20the%20weather%20for%20any%20city&descAlignY=55&descSize=16" width="100%"/>
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:0f2027,50:203a43,100:38BDF8&height=200&section=header&text=WEATHER%20APP&fontSize=52&fontColor=ffffff&animation=fadeIn&fontAlignY=35&descAlignY=55&descSize=16" width="100%"/>
 
 <div align="center">
 
